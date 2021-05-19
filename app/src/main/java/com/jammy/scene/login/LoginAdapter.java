@@ -1,15 +1,14 @@
-package com.jammy.login;
+package com.jammy.scene.login;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.jammy.signup.SignupTabFragment;
+import com.jammy.scene.signup.SignupTabFragment;
 
 public class LoginAdapter extends FragmentStateAdapter {
     private Context context;

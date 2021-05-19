@@ -1,7 +1,6 @@
-package com.jammy.login;
+package com.jammy.scene.login;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;

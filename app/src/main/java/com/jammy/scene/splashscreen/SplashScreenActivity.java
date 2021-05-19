@@ -1,4 +1,4 @@
-package com.jammy.splashscreen;
+package com.jammy.scene.splashscreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jammy.R;
-import com.jammy.dashboard.DashboardActivity;
-import com.jammy.login.LoginActivity;
+import com.jammy.scene.login.LoginActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
