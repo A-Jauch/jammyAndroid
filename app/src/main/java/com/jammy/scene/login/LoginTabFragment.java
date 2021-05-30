@@ -13,13 +13,17 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.jammy.R;
-import com.jammy.scene.dashboard.DashboardActivity;
 import com.jammy.fileManager.FileManager;
-import com.jammy.responseModel.ResponseLogin;
 import com.jammy.model.User;
+import com.jammy.responseModel.ResponseError;
+import com.jammy.responseModel.ResponseLogin;
 import com.jammy.retrofit.RetrofitClientInstance;
 import com.jammy.routes.UserRoutes;
+import com.jammy.scene.dashboard.DashboardActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,8 +63,7 @@ public class LoginTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 User user = new User(emai_edit_text.getText().toString(),password_edit_text.getText().toString());
-             //   user.setEmail(emai_edit_text.getText().toString());
-             //   user.setPassword(password_edit_text.getText().toString());
+
               userRoutes = RetrofitClientInstance.getRetrofitInstance().create(UserRoutes.class);
                 Call<ResponseLogin> loginUser = userRoutes.login(user);
                 loginUser.enqueue(new Callback<ResponseLogin>() {
@@ -68,15 +71,21 @@ public class LoginTabFragment extends Fragment {
                     public void onResponse(Call<ResponseLogin> call, retrofit2.Response<ResponseLogin> response) {
                         if (response.isSuccessful()){
                             ResponseLogin responseLogin1 = response.body();
-                            //Toast.makeText(getContext(), responseLogin1.getAccessToken().toString(), Toast.LENGTH_SHORT).show();
                             FileManager fileManager = new FileManager();
                             fileManager.writeFile(responseLogin1.getAccessToken(), "token.txt");
-                          //  String token = fileManager.readFile("token.txt");
-                          //  Toast.makeText(getContext(), token.toString(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getContext(), DashboardActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            Gson gson = new Gson();
+                            try {
+                                ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                                Toast.makeText(getContext(), errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            } catch (JsonIOException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(getContext(), " Code erreur: " + response.code(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

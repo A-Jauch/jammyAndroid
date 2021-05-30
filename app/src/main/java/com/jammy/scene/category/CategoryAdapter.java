@@ -1,24 +1,26 @@
 package com.jammy.scene.category;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jammy.R;
 import com.jammy.model.Category;
+import com.jammy.scene.thread.ThreadReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> implements Filterable {
+    public static final String ID_CATEGORY_ADAPTER = "com.jammy.scene.category.ID_CATEGORY_ADAPTER";
 
     Context context;
     List<Category> categoriesList;
@@ -72,7 +74,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public void onClick(View v) {
             int itemPosition = rvCategory.getChildLayoutPosition(v);
             Category category = categoriesList.get(itemPosition);
-            Toast.makeText(context, category.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CategoryAdapter.this.context, ThreadReceiver.class);
+            intent.putExtra(ID_CATEGORY_ADAPTER, category.getId());
+            context.startActivity(intent);
         }
     }
 
