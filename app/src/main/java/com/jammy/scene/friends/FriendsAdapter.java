@@ -1,6 +1,8 @@
 package com.jammy.scene.friends;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.jammy.R;
+import com.jammy.fileManager.FileManager;
 import com.jammy.model.Friends;
+import com.jammy.model.Status;
+import com.jammy.responseModel.ResponseError;
+import com.jammy.retrofit.RetrofitClientInstance;
+import com.jammy.routes.FriendsRoutes;
+import com.jammy.scene.chat.ChatActivity;
+import com.jammy.scene.profil.OtherProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> implements Filterable {
 
@@ -26,6 +40,16 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     // for filterable
     List<Friends> friendsFullList;
     RecyclerView rvFriends;
+    FileManager fileManager = new FileManager();
+    String token = "Bearer " + fileManager.readFile("token.txt").trim();
+    private FriendsRoutes friendsRoutes;
+
+
+    public static final String ID_USER_RECEIVER = "com.jammy.scene.chat.ID_USER_RECEIVER";
+    public static final String ID_USER_SENDER = "com.jammy.scene.chat.ID_USER_SENDER";
+    public static final String ID_USER_FROM_FRIEND_ADAPTER = "com.jammy.scene.profil.ID_USER_FROM_FRIEND_ADAPTER";
+    public static final String STATUS_FROM_FRIEND_ADAPTER = "com.jammy.scene.profil.STATUS_FROM_FRIEND_ADAPTER";
+
     final View.OnClickListener onClickListener = new MyOnClickListener();
 
 
@@ -34,6 +58,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         TextView rowEmail;
         ImageView messageImage;
         ImageView deleteImage;
+        ImageView acceptedImage;
+        ImageView declineImage;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -42,6 +68,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             rowName = itemView.findViewById(R.id.item_friends_name);
             messageImage = itemView.findViewById(R.id.messageImage);
             deleteImage = itemView.findViewById(R.id.deleteFriend_image);
+            acceptedImage = itemView.findViewById(R.id.acceptedImage);
+            declineImage = itemView.findViewById(R.id.declineFriend_image);
         }
     }
 
@@ -56,6 +84,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     @NonNull
     @Override
     public FriendsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        friendsRoutes = RetrofitClientInstance.getRetrofitInstance().create(FriendsRoutes.class);
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.single_item_friends, parent, false);
         view.setOnClickListener(onClickListener);
@@ -68,16 +97,116 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         Friends friend = friendsList.get(position);
         holder.rowName.setText(friend.getUser2().getName() + " " + friend.getUser2().getLastname());
         holder.rowEmail.setText("Email: " + friend.getUser2().getEmail() );
+        if (friend.getStatus() == 0){
+            holder.messageImage.setVisibility(View.GONE);
+            holder.deleteImage.setVisibility(View.GONE);
+            holder.acceptedImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Status status = new Status(1);
+                    Call<Void> acceptFriend = friendsRoutes.updateFriend(friend.getId(),status,token);
+                    acceptFriend.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()){
+                                Toast.makeText(FriendsAdapter.this.context, "Demande accepter", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(FriendsAdapter.this.context, FriendsReceiver.class);
+                                context.startActivity(intent);
+                                ((Activity)context).finish();
+                            } else {
+                                Gson gson = new Gson();
+                                ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                                Toast.makeText(FriendsAdapter.this.context, errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            if (response.code() == 500){
+                                Toast.makeText(FriendsAdapter.this.context, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(FriendsAdapter.this.context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
+            holder.declineImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // Friends friends = new Friends(friend.getId_user1(),friend.getId_user2(),2);
+                    Call<Void> rejectFriend = friendsRoutes.deleteFriend(friend.getId(),token);
+                    rejectFriend.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()){
+                                Toast.makeText(FriendsAdapter.this.context, "Demande rejeter", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(FriendsAdapter.this.context, FriendsReceiver.class);
+                                context.startActivity(intent);
+                                ((Activity)context).finish();
+                            } else {
+                                Gson gson = new Gson();
+                                ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                                Toast.makeText(FriendsAdapter.this.context, errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            if (response.code() == 500){
+                                Toast.makeText(FriendsAdapter.this.context, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(FriendsAdapter.this.context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        } else if (friend.getStatus() == 1){
+            holder.messageImage.setVisibility(View.VISIBLE);
+            holder.deleteImage.setVisibility(View.VISIBLE);
+            holder.declineImage.setVisibility(View.GONE);
+            holder.acceptedImage.setVisibility(View.GONE);
+        }
         holder.messageImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Envoie msg", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(FriendsAdapter.this.context, ChatActivity.class);
+                intent.putExtra(ID_USER_RECEIVER, friend.getId_user2());
+                intent.putExtra(ID_USER_SENDER, friend.getId_user1());
+                context.startActivity(intent);
+                //  Toast.makeText(context, "Envoie msg", Toast.LENGTH_SHORT).show();
             }
         });
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "delete msg", Toast.LENGTH_SHORT).show();
+                Call<Void> rejectFriend = friendsRoutes.deleteFriend(friend.getId(),token);
+                rejectFriend.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()){
+                            Toast.makeText(FriendsAdapter.this.context, "Demande rejeter", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(FriendsAdapter.this.context, FriendsReceiver.class);
+                            context.startActivity(intent);
+                            ((Activity)context).finish();
+                        } else {
+                            Gson gson = new Gson();
+                            ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                            Toast.makeText(FriendsAdapter.this.context, errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        if (response.code() == 500){
+                            Toast.makeText(FriendsAdapter.this.context, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(FriendsAdapter.this.context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -92,7 +221,12 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     private class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
+            int itemPosition = rvFriends.getChildLayoutPosition(v);
+            Friends friends = friendsList.get(itemPosition);
+            Intent intent = new Intent(FriendsAdapter.this.context, OtherProfileActivity.class);
+            intent.putExtra(ID_USER_FROM_FRIEND_ADAPTER, friends.getId_user2());
+            intent.putExtra(STATUS_FROM_FRIEND_ADAPTER, friends.getStatus());
+            context.startActivity(intent);
         }
     }
 

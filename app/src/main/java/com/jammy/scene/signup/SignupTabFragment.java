@@ -2,6 +2,7 @@ package com.jammy.scene.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,18 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
 import com.jammy.R;
-import com.jammy.scene.login.LoginActivity;
 import com.jammy.model.User;
+import com.jammy.responseModel.ResponseError;
 import com.jammy.retrofit.RetrofitClientInstance;
 import com.jammy.routes.UserRoutes;
+import com.jammy.scene.login.LoginActivity;
 
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +42,10 @@ public class SignupTabFragment  extends Fragment {
         lastname_edit_text = root.findViewById(R.id.signup_lastname);
         birthdate_edit_text = root.findViewById(R.id.signup_birthdate);
         signup_btn = root.findViewById(R.id.signup_btn);
+        Calendar calendar = Calendar.getInstance();
+        final  int year = calendar.get(Calendar.YEAR);
+        final  int month = calendar.get(Calendar.MONTH);
+        final  int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         email_edit_text.setTranslationX(800);
         password_edit_text.setTranslationX(800);
@@ -65,14 +73,25 @@ public class SignupTabFragment  extends Fragment {
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str_date = "12-20-1999";
+                String str_date = birthdate_edit_text.getText().toString();
+                if (TextUtils.isEmpty(str_date)){
+                    Toast.makeText(getContext(), "La date ne peut pas être vide", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 Date birthday = null;
                 try {
                     birthday = new Date(simpleDateFormat.parse(str_date).getTime()) ;
                 } catch (ParseException e) {
                     e.printStackTrace();
+                }
+
+
+
+                if ( birthday.compareTo(calendar.getTime()) > 0 ){
+                    Toast.makeText(getContext(), "La date ne peut pas être superieur a celle d'ajd", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
 
@@ -90,11 +109,14 @@ public class SignupTabFragment  extends Fragment {
                     public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                         if (response.isSuccessful()){
                             User user = response.body();
-                            Toast.makeText(getContext(), user.getName().toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), user.getName().toString(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getContext(), LoginActivity.class);
                             startActivity(intent);
+
                         } else if ( !response.isSuccessful()){
-                            Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                            Gson gson = new Gson();
+                            ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                            Toast.makeText(getContext(), errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

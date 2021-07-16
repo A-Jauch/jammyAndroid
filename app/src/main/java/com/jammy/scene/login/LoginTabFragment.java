@@ -31,7 +31,7 @@ import retrofit2.Callback;
 public class LoginTabFragment extends Fragment {
     UserRoutes userRoutes;
     EditText emai_edit_text, password_edit_text;
-    TextView fortgetPassword_text;
+    TextView fortgetPassword_text, resetPassword_text;
     Button login_btn;
     float v = 0;
     @Nullable
@@ -42,21 +42,25 @@ public class LoginTabFragment extends Fragment {
         emai_edit_text = root.findViewById(R.id.login_email);
         password_edit_text = root.findViewById(R.id.login_password);
         fortgetPassword_text = root.findViewById(R.id.forgetPassword_text);
+        resetPassword_text = root.findViewById(R.id.resetPassword_text);
         login_btn = root.findViewById(R.id.login_btn);
 
         emai_edit_text.setTranslationX(800);
         password_edit_text.setTranslationX(800);
         fortgetPassword_text.setTranslationX(800);
+        resetPassword_text.setTranslationX(800);
         login_btn.setTranslationX(800);
 
         emai_edit_text.setAlpha(v);
         password_edit_text.setAlpha(v);
         fortgetPassword_text.setAlpha(v);
+        resetPassword_text.setAlpha(v);
         login_btn.setAlpha(v);
 
         emai_edit_text.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         password_edit_text.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(600).start();
         fortgetPassword_text.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(800).start();
+        resetPassword_text.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1000).start();
         login_btn.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +77,12 @@ public class LoginTabFragment extends Fragment {
                             ResponseLogin responseLogin1 = response.body();
                             FileManager fileManager = new FileManager();
                             fileManager.writeFile(responseLogin1.getAccessToken(), "token.txt");
+
+                            FileManager connectionFm = new FileManager();
+                            connectionFm.writeFile("isConnected","connect.txt");
                             Intent intent = new Intent(getContext(), DashboardActivity.class);
                             startActivity(intent);
+                            getActivity().finish();
                         } else {
                             Gson gson = new Gson();
                             try {
@@ -96,6 +104,22 @@ public class LoginTabFragment extends Fragment {
                 });
 
 
+            }
+        });
+
+        fortgetPassword_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ForgetPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        resetPassword_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
 

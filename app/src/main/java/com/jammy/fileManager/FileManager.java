@@ -1,8 +1,6 @@
 package com.jammy.fileManager;
 
-import android.content.Context;
 import android.os.Environment;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,5 +47,13 @@ public class FileManager {
             e.printStackTrace();
         }
         return value;
+    }
+
+    public boolean deleteFile(String fileName){
+        File path = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS);
+        File file = new File(path, "/" + fileName);
+        boolean deleted = file.delete();
+        return deleted;
     }
 }

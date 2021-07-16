@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".scene.profil.EditProfilActivity">
+
+
+
+
+    <EditText
+        android:id="@+id/lasttname_profil_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Last Name"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".8" />
+
+    <EditText
+        android:id="@+id/firstname_profil_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="First Name"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lasttname_profil_input"
+        app:layout_constraintWidth_percent=".8" />
+
+
+    <EditText
+        android:id="@+id/email_profil_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Email"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstname_profil_input"
+        app:layout_constraintWidth_percent=".8" />
+
+    <Button
+        android:id="@+id/send_profil_info_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_bg"
+        android:fontFamily="@font/coiny"
+        android:text="Send modif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_profil_input" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

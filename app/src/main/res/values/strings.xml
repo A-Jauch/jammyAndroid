@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">Jammy</string>
     <string name="cat_gorie">Catégorie</string>
+    <string name="new_cat_gorie">Proposer Catégorie</string>
+    <string name="new_post">Nouveau Post</string>
+    <string name="creer_post">Creer Post</string>
+    <string name="creer_par">Crée par</string>
+    <string name="contenue">Contenue</string>
+    <string name="participant">Participant</string>
+    <string name="post_created">vous avez crée un post</string>
+    <string name="comment_created">vous avez crée un commentaire vous serez redirigez dans 2 seconde</string>
+    <string name="new_thread">Nouveau Thread</string>
+    <string name="posted_by">Posté par</string>
+    <string name="status">Status</string>
+    <string name="answer">Réponse</string>
+    <string name="demande">Demande</string>
+    <string name="jammy_category">Jammy Catégorie</string>
+    <string name="devenir_jam_creator">Devenir Jam Creator</string>
+    <string name="editer_le_profil">Editer le profile</string>
+    <string name="email">Email</string>
+    <string name="description">Descritpion</string>
+    <string name="name">Nom</string>
 </resources>

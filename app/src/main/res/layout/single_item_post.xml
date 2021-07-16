@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/clearwhite_bg"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="16dp">
+
+    <TextView
+        android:id="@+id/item_post_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Content "
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/item_post_thread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Associate to "
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/item_post_content"
+        app:layout_constraintTop_toBottomOf="@+id/item_post_content" />
+
+    <TextView
+        android:id="@+id/item_post_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Posted by "
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_post_thread" />
+
+    <TextView
+        android:id="@+id/item_post_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="Date "
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/profil_image_view"
+        android:layout_width="78dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/item_post_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_post_content"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/profil" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

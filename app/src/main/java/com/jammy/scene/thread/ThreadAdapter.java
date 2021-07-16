@@ -1,6 +1,7 @@
 package com.jammy.scene.thread;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jammy.R;
 import com.jammy.model.Thread;
+import com.jammy.scene.post.PostReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder> implements Filterable {
+    public static final String ID_THREAD_ADAPTER = "com.jammy.scene.thread.THREAD_ADAPTER";
 
     Context context;
     List<Thread> threadList;
@@ -61,7 +64,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     public void onBindViewHolder(@NonNull  ThreadAdapter.ViewHolder holder, int position) {
         Thread thread = threadList.get(position);
         holder.rowName.setText("Name: " + thread.getName());
-        holder.rowCategory.setText("Category: " + thread.getCategory().getName());
+        holder.rowCategory.setText(thread.getCategory().getName());
     }
 
     @Override
@@ -72,7 +75,11 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     private class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
+            int itemPosition = rvThread.getChildLayoutPosition(v);
+            Thread thread = threadList.get(itemPosition);
+            Intent intent = new Intent(ThreadAdapter.this.context, PostReceiver.class);
+            intent.putExtra(ID_THREAD_ADAPTER, thread.getId());
+            context.startActivity(intent);
         }
     }
 

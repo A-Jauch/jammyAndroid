@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Jammy</string>
+    <string name="cat_gorie">Category</string>
+    <string name="new_cat_gorie">Send new Category</string>
+    <string name="new_post" translatable="false">New Post</string>
+    <string name="creer_post">Create Post</string>
+    <string name="contenue">Content</string>
+    <string name="participant">Participant</string>
+    <string name="post_created">post has been created</string>
+    <string name="new_thread">New Thread</string>
+    <string name="posted_by">Posted by</string>
+    <string name="jammy_category">Jammy Category</string>
+    <string name="comment_created">comment has been created you will be redirect in 2 second</string>
+    <string name="devenir_jam_creator">Become Jam Creator</string>
+    <string name="editer_le_profil">Edit Profil</string>
+    <string name="email">Email</string>
+    <string name="creer_par">Created by</string>
+    <string name="description">Descritpion</string>
+    <string name="status">Status</string>
+    <string name="answer">Answer</string>
+    <string name="demande">Demand</string>
+    <string name="name">Name</string>
+
+
+</resources>

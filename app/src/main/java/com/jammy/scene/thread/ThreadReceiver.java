@@ -64,6 +64,7 @@ public class ThreadReceiver extends AppCompatActivity {
                 Intent intent = new Intent(ThreadReceiver.this, CreateThreadActivity.class);
                 intent.putExtra(ID_CATEGORY_THREAD, categoryId);
                startActivity(intent);
+                finish();
             }
         });
     }

@@ -11,6 +11,7 @@ public class User {
     private Date birthday;
     private Role role;
 
+
     public User() {
     }
 
