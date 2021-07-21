@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "886819830215",
+    "project_id": "jammy-549f1",
+    "storage_bucket": "jammy-549f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886819830215:android:a076db8eb0b1a26e87c1e2",
+        "android_client_info": {
+          "package_name": "com.jammy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886819830215-vgfpie46me07dmm870l56c6lajt38392.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmv2N_PVOV33zN0LUh28JBT_8RMa0etxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886819830215-vgfpie46me07dmm870l56c6lajt38392.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
