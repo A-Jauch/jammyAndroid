@@ -22,6 +22,15 @@
     <string name="answer">Answer</string>
     <string name="demande">Demand</string>
     <string name="name">Name</string>
+    <string name="post_updated">"post has been modified "</string>
+    <string name="comment_updated">comment has been modified</string>
+    <string name="mes_amis">My Friends</string>
+    <string name="mon_profil">My Profil</string>
+    <string name="voir_mes_demandes">My Requests</string>
+    <string name="my_requests">My Requests</string>
+    <string name="accueil">Home</string>
+    <string name="new_comment">"new comment "</string>
+    <string name="creer_commentaire">create comment</string>
 
 
 </resources>

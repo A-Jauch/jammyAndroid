@@ -1,5 +1,6 @@
 package com.jammy.routes;
 
+import com.jammy.model.FcmToken;
 import com.jammy.model.ResetPassword;
 import com.jammy.model.User;
 import com.jammy.responseModel.ResponseLogin;
@@ -30,6 +31,8 @@ public interface UserRoutes {
     @PUT("user/{id}")
     Call<Void> updateUser(@Body User user, @Path("id") int id, @Header("Authorization") String token);
 
+    @PUT("user/{id}")
+    Call<Void> updateUserFcm(@Body FcmToken fcmToken, @Path("id") int id, @Header("Authorization") String token);
 
     @PUT("reset/password")
     Call<Void> updatePassword(@Body ResetPassword resetPassword);

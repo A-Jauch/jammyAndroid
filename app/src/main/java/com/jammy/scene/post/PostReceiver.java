@@ -3,7 +3,6 @@ package com.jammy.scene.post;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -46,6 +45,7 @@ public class PostReceiver extends AppCompatActivity {
     private UserRoutes userRoutes;
     private User user = new User();
     private int threadId;
+    private int threadIdUpdate;
     public static final String ID_POST_THREAD = "com.jammy.scene.thread.ID_POST_THREAD";
     public static final String ID_POST_USER = "com.jammy.scene.thread.ID_POST_USER";
 
@@ -54,16 +54,20 @@ public class PostReceiver extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_receiver);
-        newPostBtn = findViewById(R.id.create_post_btn);
-        newPostBtn.setVisibility(View.GONE);
         Intent intent = getIntent();
         // get thread id from last activity
         threadId = intent.getIntExtra(ThreadAdapter.ID_THREAD_ADAPTER,0);
 
         // to get the good thread id after creation
         if (threadId == 0){
-            threadId = intent.getIntExtra(CreatePostActivity.ID_POST_CREATED_THREAD,0);
+            threadId = intent.getIntExtra(CreatePostActivity.ID_POST_CREATED_THREAD,-1);
         }
+
+        if (threadId == -1){
+            threadId = intent.getIntExtra(UpdatePostActivity.ID_THREAD_FROM_POST_UPDATE,-2);
+        }
+
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -121,16 +125,7 @@ public class PostReceiver extends AppCompatActivity {
                 Toast.makeText(PostReceiver.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        newPostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PostReceiver.this, CreatePostActivity.class);
-                intent.putExtra(ID_POST_THREAD, threadId);
-                intent.putExtra(ID_POST_USER, user.getId());
-                startActivity(intent);
-                finish();
-            }
-        });
+
         getAllPostByThread(threadId);
 
 

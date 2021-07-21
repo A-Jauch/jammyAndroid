@@ -60,7 +60,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RequestAdapter.ViewHolder holder, int position) {
         Request request = requestList.get(position);
-        holder.rowContent.setText(context.getString(R.string.contenue) + ": " + request.getContent());
+        holder.rowContent.setText(request.getContent());
         holder.rowUser.setText(context.getString(R.string.posted_by) + ": " + request.getUser().getName() + " " + request.getUser().getLastname());
         if (request.getStatus() == 0){
             holder.rowStatus.setText(context.getString(R.string.status) + ": " + "Pending");
@@ -69,7 +69,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         }else if (request.getStatus() == 2){
             holder.rowStatus.setText(context.getString(R.string.status) + ": " + "Denied");
         }
-        holder.rowAnswer.setText(context.getString(R.string.answer) + ": " + request.getAnswer());
+        holder.rowAnswer.setText(request.getAnswer());
         if (request.getJam_or_cat() == 1){
             holder.rowJamOrCat.setText(context.getString(R.string.demande) + ": " + "Category request");
         } else if (request.getJam_or_cat() == 2){

@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".scene.request.RequestReceiver"></activity>
+        <activity android:name=".scene.comment.UpdateCommentActivity"></activity>
+        <activity android:name=".scene.post.UpdatePostActivity" />
+        <activity android:name=".scene.request.RequestReceiver" />
         <activity android:name=".scene.login.ResetPasswordActivity" />
         <activity android:name=".scene.profil.EditProfilActivity" />
         <activity android:name=".scene.login.ForgetPasswordActivity" />

@@ -35,7 +35,7 @@ public class MyProfileActivity extends AppCompatActivity {
     Button editProfilButton,showRequestButton;
     CardView newCatCard, jamOwnerCard;
     String token = "Bearer " + fileManager.readFile("token.txt").trim();
-    TextView userName_text, email_text, role_text;
+    TextView userName_text, email_text, role_text,instrument_text;
     public static final String ID_JAM_OR_CAT = "com.jammy.scene.profil.ID_JAM_OR_CAT";
     public static final String ID_USER_FROM_PROFILE = "com.jammy.scene.profil.ID_USER_FROM_PROFILE";
 
@@ -52,6 +52,7 @@ public class MyProfileActivity extends AppCompatActivity {
         jamOwnerCard = findViewById(R.id.ProfilejamCard);
         editProfilButton = findViewById(R.id.edit_profile_btn);
         showRequestButton = findViewById(R.id.show_request_btn);
+        instrument_text = findViewById(R.id.profile_instrument);
 
         userRoutes = RetrofitClientInstance.getRetrofitInstance().create(UserRoutes.class);
         Call<ResponseUser> getMe = userRoutes.me(token);
@@ -63,6 +64,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     userName_text.setText(responseUser.getResults().getName() + " " + responseUser.getResults().getLastname());
                     email_text.setText(responseUser.getResults().getEmail());
                     role_text.setText(responseUser.getResults().getRole().getName());
+                    instrument_text.setText(responseUser.getResults().getInstrument().getName());
                     user.setId(responseUser.getResults().getId());
 
                 } else {

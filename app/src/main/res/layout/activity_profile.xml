@@ -40,14 +40,13 @@
 
     <TextView
         android:id="@+id/profile_name"
-        android:textColor="@color/white"
-        android:fontFamily="@font/coiny"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="136dp"
+        android:fontFamily="@font/coiny"
         android:text="Albert beber"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo_profile" />
 
@@ -63,6 +62,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
+    <TextView
+        android:id="@+id/profile_instrument"
+        android:fontFamily="@font/coiny"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Admin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email" />
 
     <TextView
         android:id="@+id/profile_role"
@@ -75,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_instrument" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,11 +121,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/button_bg"
             android:fontFamily="@font/coiny"
-            android:text="Voir mes demandes"
+            android:text="@string/voir_mes_demandes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +135,7 @@
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="175dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"

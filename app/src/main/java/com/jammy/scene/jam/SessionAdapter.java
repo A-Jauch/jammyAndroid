@@ -29,14 +29,13 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView rowName, rowEmail, rowUser, rowDate;
+        TextView rowName, rowEmail, rowInstrument;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             rowName = itemView.findViewById(R.id.item_session_name);
             rowEmail = itemView.findViewById(R.id.item_session_email);
-        //    rowUser = itemView.findViewById(R.id.item_jam_creator);
-        //    rowDate = itemView.findViewById(R.id.item_jam_date);
+            rowInstrument = itemView.findViewById(R.id.item_session_instrument);
 
         }
     }
@@ -61,8 +60,9 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull SessionAdapter.ViewHolder holder, int position) {
         Session session = sessionList.get(position);
-        holder.rowName.setText(context.getString(R.string.participant) + ": " + session.getUser().getName() + " " + session.getUser().getLastname());
-        holder.rowEmail.setText(context.getString(R.string.email) + ": " + session.getUser().getEmail());
+        holder.rowName.setText(session.getUser().getName() + " " + session.getUser().getLastname());
+        holder.rowEmail.setText(session.getUser().getEmail());
+        holder.rowInstrument.setText(session.getUser().getInstrument().getName());
     }
 
     @Override

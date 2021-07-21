@@ -15,17 +15,18 @@ import com.google.gson.Gson;
 import com.jammy.R;
 import com.jammy.fileManager.FileManager;
 import com.jammy.model.CreateQuery;
+import com.jammy.model.Query;
 import com.jammy.model.Session;
 import com.jammy.model.User;
 import com.jammy.responseModel.ResponseCreateQueries;
 import com.jammy.responseModel.ResponseError;
+import com.jammy.responseModel.ResponseQueries;
 import com.jammy.responseModel.ResponseSession;
 import com.jammy.responseModel.ResponseUser;
 import com.jammy.retrofit.RetrofitClientInstance;
 import com.jammy.routes.QueriesRoutes;
 import com.jammy.routes.SessionRoutes;
 import com.jammy.routes.UserRoutes;
-import com.jammy.scene.profil.OtherProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class JamDetails extends AppCompatActivity {
         jammyLabelText.setText("Jammy Session " + jamId);
         getMe();
         getSessionByJamId(jamId);
-
+        getQueriesforJam(jamId);
 
         joinJamBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +106,40 @@ public class JamDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseCreateQueries> call, Throwable t) {
+                Toast.makeText(JamDetails.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getQueriesforJam(int jamId) {
+        queriesRoutes = RetrofitClientInstance.getRetrofitInstance().create(QueriesRoutes.class);
+       //  createQuery = new CreateQuery(jamId);
+        Call<ResponseQueries> sendQuery = queriesRoutes.findQueryByJam(jamId,token);
+        sendQuery.enqueue(new Callback<ResponseQueries>() {
+            @Override
+            public void onResponse(Call<ResponseQueries> call, Response<ResponseQueries> response) {
+                if (response.isSuccessful()){
+                    for (Query query: response.body().getResults()){
+                        if (query.getUser().getId() == user.getId()){
+                            joinJamBtn.setVisibility(View.INVISIBLE);
+                            return;
+                        }
+                    }
+                    //    Intent intent = new Intent(getApplicationContext(), FriendsReceiver.class);
+                    //     startActivity(intent);
+                } else {
+                    Gson gson = new Gson();
+                    ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                //    Toast.makeText(JamDetails.this, errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                if (response.code() == 500){
+                    Toast.makeText(JamDetails.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseQueries> call, Throwable t) {
                 Toast.makeText(JamDetails.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -81,7 +81,7 @@ public class RequestReceiver extends AppCompatActivity {
                     ResponseRequest responseRequest = response.body();
                     populateRequestAdapter(responseRequest.getResults());
                 } else {
-                    Toast.makeText(RequestReceiver.this, response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RequestReceiver.this, "No requests for this profile", Toast.LENGTH_SHORT).show();
                 }
 
                 if (response.code() == 500){

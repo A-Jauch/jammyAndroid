@@ -6,7 +6,7 @@
 
 
     <ImageView
-        android:id="@+id/profile_bg"
+        android:id="@+id/other_profile_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="264dp"
@@ -37,7 +37,7 @@
         app:srcCompat="@drawable/add_friend" />
 
     <TextView
-        android:id="@+id/profile_name"
+        android:id="@+id/other_profile_name"
         android:textColor="@color/white"
         android:fontFamily="@font/coiny"
         android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="@+id/logo_profile" />
 
     <TextView
-        android:id="@+id/profile_email"
+        android:id="@+id/other_profile_email"
         android:textColor="@color/white"
         android:fontFamily="@font/coiny"
         android:layout_width="wrap_content"
@@ -59,39 +59,23 @@
         android:text="test@gmaim.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_name" />
-
-
-    <TextView
-        android:id="@+id/profile_role"
-        android:fontFamily="@font/coiny"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Admin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+        app:layout_constraintTop_toBottomOf="@+id/other_profile_name" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/white_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_role">
+        app:layout_constraintTop_toBottomOf="@+id/other_profile_email">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="175dp"
-            android:layout_marginTop="32dp"
             android:orientation="horizontal"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +96,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/category_profil_label"
+                        android:id="@+id/other_profile_instrument"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/categoryImageView"
@@ -128,7 +112,7 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/category" />
+                        app:srcCompat="@drawable/ic_live_music" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -144,7 +128,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/jam_profile_label"
+                        android:id="@+id/other_profile_role"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/jamImage"
@@ -160,7 +144,7 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        app:srcCompat="@drawable/jam" />
+                        app:srcCompat="@drawable/ic_certification" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

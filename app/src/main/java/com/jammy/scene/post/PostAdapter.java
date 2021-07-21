@@ -9,12 +9,20 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.jammy.R;
+import com.jammy.fileManager.FileManager;
 import com.jammy.model.Post;
+import com.jammy.model.User;
+import com.jammy.responseModel.ResponseError;
+import com.jammy.responseModel.ResponseUser;
+import com.jammy.retrofit.RetrofitClientInstance;
+import com.jammy.routes.UserRoutes;
 import com.jammy.scene.comment.CommentReceiver;
 import com.jammy.scene.profil.OtherProfileActivity;
 
@@ -22,14 +30,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> implements Filterable {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> implements Filterable {
+    private User user = new User();
     Context context;
     List<Post> postList;
-
+    private UserRoutes userRoutes;
+    FileManager fileManager = new FileManager();
+    String token = fileManager.readFile("token.txt").trim();
     List<Post> postListFull;
     RecyclerView rvPost;
     public static final String ID_POST_ADAPTER = "com.jammy.scene.post.ID_POST_ADAPTER";
+    public static final String ID_THREAD_FROM_POST_ADAPTER = "com.jammy.scene.post.ID_THREAD_FROM_POST_ADAPTER";
     public static final String INFO_POST_USER = "com.jammy.scene.post.INFO_POST_USER";
     public static final String INFO_POST_CONTENT = "com.jammy.scene.post.INFO_POST_CONTENT";
     public static final String ID_POST_USER = "com.jammy.scene.post.ID_POST_USER";
@@ -40,7 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView rowContent, rowThread, rowUser, rowDate;
-        ImageView profilImage;
+        ImageView profilImage,editPostImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,6 +64,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
             rowUser = itemView.findViewById(R.id.item_post_user);
             rowDate = itemView.findViewById(R.id.item_post_date);
             profilImage = itemView.findViewById(R.id.profil_image_view);
+            editPostImage = itemView.findViewById(R.id.modifypost_image_view);
 
         }
     }
@@ -73,8 +89,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
         Post post = postList.get(position);
-        holder.rowContent.setText(context.getString(R.string.contenue) + ": " + post.getContent());
-        holder.rowThread.setText("Thread: " + post.getThread().getName());
+        holder.rowContent.setText(post.getContent());
+        holder.rowThread.setText(post.getThread().getName());
         holder.rowUser.setText(context.getString(R.string.posted_by) + ": " + post.getUser().getName() + " " + post.getUser().getLastname());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
        // String formatDate = simpleDateFormat.format(ts);
@@ -85,6 +101,45 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
                 Intent intent = new Intent(PostAdapter.this.context, OtherProfileActivity.class);
                 intent.putExtra(ID_USER_FROM_POST_ADAPTER, post.getUser().getId());
                 context.startActivity(intent);
+            }
+        });
+
+        userRoutes = RetrofitClientInstance.getRetrofitInstance().create(UserRoutes.class);
+        Call<ResponseUser> getMe = userRoutes.me("Bearer " + token);
+        getMe.enqueue(new Callback<ResponseUser>() {
+            @Override
+            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                if (response.isSuccessful()){
+                    ResponseUser responseUser = response.body();
+                    user.setId(responseUser.getResults().getId());
+                    if (post.getUser().getId() == user.getId()){
+                        holder.profilImage.setVisibility(View.GONE);
+                        holder.editPostImage.setVisibility(View.VISIBLE);
+                        holder.editPostImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(PostAdapter.this.context, UpdatePostActivity.class);
+                                intent.putExtra(ID_POST_ADAPTER, post.getId());
+                                intent.putExtra(ID_POST_USER, post.getUser_id());
+                                intent.putExtra(ID_THREAD_FROM_POST_ADAPTER, post.getThread_id());
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
+                } else {
+                    Gson gson = new Gson();
+                    ResponseError errorMessage = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+                    Toast.makeText(context.getApplicationContext(), errorMessage.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                if (response.code() == 500){
+                    Toast.makeText(context.getApplicationContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseUser> call, Throwable t) {
+                Toast.makeText(context.getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -165,7 +165,7 @@
                         android:layout_below="@id/friendImageView"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="Mes Amis" />
+                        android:text="@string/mes_amis" />
 
                     <ImageView
                         android:id="@+id/friendImageView"
@@ -174,6 +174,15 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
                         app:srcCompat="@drawable/friend" />
+
+                    <ImageView
+                        android:id="@+id/friendNotifImageView"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/friend_notif" />
+
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -197,7 +206,7 @@
                         android:layout_below="@id/profilImageView"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="Mon Profil" />
+                        android:text="@string/mon_profil" />
 
                     <ImageView
                         android:id="@+id/profilImageView"

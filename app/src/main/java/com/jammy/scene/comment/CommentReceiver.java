@@ -48,6 +48,7 @@ public class CommentReceiver extends AppCompatActivity {
     private CommentRoutes  commentRoutes;
     private String userName;
     private String postContent;
+
     public static final String ID_POST_FROM_COM_RECEIVER = "com.jammy.scene.comment.ID_POST_FROM_COM_RECEIVER";
     public static final String ID_USER_FROM_COM_RECEIVER = "com.jammy.scene.comment.ID_USER_FROM_COM_RECEIVER";
     public static final String POST_CONTENT_FROM_COM_RECEIVER = "com.jammy.scene.comment.POST_CONTENT_FROM_COM_RECEIVER";
@@ -67,7 +68,11 @@ public class CommentReceiver extends AppCompatActivity {
         commentRoutes = RetrofitClientInstance.getRetrofitInstance().create(CommentRoutes.class);
 
         if (postId == 0){
-            postId = intent.getIntExtra(CreateCommentActivity.ID_POST_FROM_CREATED_COM,0);
+            postId = intent.getIntExtra(CreateCommentActivity.ID_POST_FROM_CREATED_COM,-1);
+        }
+
+        if (postId == -1){
+            postId = intent.getIntExtra(UpdateCommentActivity.ID_POST_FROM_COM_UPDATE,-2);
         }
 
         userName = intent.getStringExtra(PostAdapter.INFO_POST_USER);
@@ -75,10 +80,15 @@ public class CommentReceiver extends AppCompatActivity {
         if (userName == null && postContent == null){
             userName = intent.getStringExtra(CreateCommentActivity.INFO_USER_FROM_CREATED_COM_);
             postContent = intent.getStringExtra(CreateCommentActivity.POST_CONTENT_FROM_CREATED_COM);
+            if (userName == null && postContent == null){
+                postContent = intent.getStringExtra(UpdateCommentActivity.INFO_POST_FROM_COM_UPDATE);
+                userName = intent.getStringExtra(UpdateCommentActivity.INFO_USER_FROM_COM_UPDATE);
+            }
         }
 
         postContentTextView.setText(postContent);
         userTextView.setText(userName);
+
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -156,6 +166,7 @@ public class CommentReceiver extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseComment> call, Throwable t) {
+                Toast.makeText(CommentReceiver.this, t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });

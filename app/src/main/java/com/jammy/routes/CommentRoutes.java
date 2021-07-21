@@ -1,5 +1,6 @@
 package com.jammy.routes;
 
+import com.jammy.model.Comment;
 import com.jammy.model.CreateComment;
 import com.jammy.responseModel.ResponseComment;
 import com.jammy.responseModel.ResponseCreateComment;
@@ -9,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface CommentRoutes {
@@ -18,5 +20,8 @@ public interface CommentRoutes {
 
     @POST("comment")
     Call<ResponseCreateComment> postComment (@Body CreateComment comment, @Header("Authorization") String token);
+
+    @PUT("comment/{id}")
+    Call<Void> updateComment(@Body Comment comment, @Path("id") int id, @Header("Authorization") String token);
 
 }

@@ -38,7 +38,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     FileManager fileManager = new FileManager();
     ImageView addFriendImage;
     String token = "Bearer " + fileManager.readFile("token.txt").trim();
-    TextView userName_text, email_text, role_text;
+    TextView userName_text, email_text, role_text, instrument_text;
     private int userId;
     private int status;
 
@@ -46,9 +46,10 @@ public class OtherProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_profile);
-        userName_text = findViewById(R.id.profile_name);
-        email_text = findViewById(R.id.profile_email);
-        role_text = findViewById(R.id.profile_role);
+        userName_text = findViewById(R.id.other_profile_name);
+        email_text = findViewById(R.id.other_profile_email);
+        role_text = findViewById(R.id.other_profile_role);
+        instrument_text = findViewById(R.id.other_profile_instrument);
         addFriendImage = findViewById(R.id.addFriendImage);
         addFriendImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +128,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                     userName_text.setText(responseUser.getResults().getName() + " " + responseUser.getResults().getLastname());
                     email_text.setText(responseUser.getResults().getEmail());
                     role_text.setText(responseUser.getResults().getRole().getName());
+                    instrument_text.setText(responseUser.getResults().getInstrument().getName());
                     if (status == 0 || status == 1){
                         addFriendImage.setVisibility(View.GONE);
                         return;

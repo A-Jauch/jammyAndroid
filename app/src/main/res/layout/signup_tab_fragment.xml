@@ -16,7 +16,6 @@
             android:id="@+id/signup_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_bg"
             android:hint="Email"
             android:paddingLeft="20dp"
@@ -31,10 +30,10 @@
             android:id="@+id/signup_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_bg"
-            android:inputType="textPassword"
             android:hint="Password"
+            android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -48,7 +47,7 @@
             android:id="@+id/signup_firstname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_bg"
             android:hint="Firstname"
             android:paddingLeft="20dp"
@@ -64,7 +63,7 @@
             android:id="@+id/signup_lastname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_bg"
             android:hint="Lastname"
             android:paddingLeft="20dp"
@@ -76,13 +75,13 @@
             app:layout_constraintTop_toBottomOf="@+id/signup_firstname"
             app:layout_constraintWidth_percent=".8" />
 
-        <EditText
-            android:id="@+id/signup_birthdate"
+        <Spinner
+            android:id="@+id/spinner_instrument"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/edit_text_bg"
-            android:hint="Birthdate (jj-MM-AAAA)"
+            android:hint="Instrument"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -90,6 +89,23 @@
             app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signup_lastname"
+            app:layout_constraintWidth_percent=".8" />
+
+
+        <EditText
+            android:id="@+id/signup_birthdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_bg"
+            android:hint="Birthdate (MM-dd-yyyy)"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_instrument"
             app:layout_constraintWidth_percent=".8" />
 
         <Button

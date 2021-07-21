@@ -63,7 +63,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull  ThreadAdapter.ViewHolder holder, int position) {
         Thread thread = threadList.get(position);
-        holder.rowName.setText("Name: " + thread.getName());
+        holder.rowName.setText(thread.getName());
         holder.rowCategory.setText(thread.getCategory().getName());
     }
 
