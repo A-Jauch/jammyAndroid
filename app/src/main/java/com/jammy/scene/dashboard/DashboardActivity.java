@@ -132,6 +132,11 @@ public class DashboardActivity extends AppCompatActivity {
                         public void onResponse(Call<ResponseFriend> call, Response<ResponseFriend> response) {
                             if (response.isSuccessful()){
                                 ResponseFriend friendsResponse = response.body();
+                                if (friendsResponse.getResults().size() == 0){
+                                    friendImage.setVisibility(View.VISIBLE);
+                                    friendNotifImage.setVisibility(View.INVISIBLE);
+                                    return;
+                                }
                                 for (Friends friends: friendsResponse.getResults()){
                                     if (friends.getStatus() == 0){
                                         friendImage.setVisibility(View.INVISIBLE);
@@ -140,7 +145,6 @@ public class DashboardActivity extends AppCompatActivity {
                                     } else if (friends.getStatus() == 1){
                                         friendImage.setVisibility(View.VISIBLE);
                                         friendNotifImage.setVisibility(View.INVISIBLE);
-                                        return;
                                     }
 
                                 }
@@ -186,7 +190,7 @@ public class DashboardActivity extends AppCompatActivity {
                         }
                         // Get new FCM registration token
                         String FCMtoken = task.getResult();
-                        if (resUser.getFcm_token().isEmpty() || !resUser.getFcm_token().equals(FCMtoken)){
+                        if (resUser.getFcm_token() == null || !resUser.getFcm_token().equals(FCMtoken)){
                             updateUserToken(FCMtoken);
                         }
                     });
