@@ -30,7 +30,13 @@
     <string name="my_requests">My Requests</string>
     <string name="accueil">Home</string>
     <string name="new_comment">"new comment "</string>
-    <string name="creer_commentaire">create comment</string>
+    <string name="creer_commentaire">Create Comment</string>
+    <string name="thread_vide">Thread name can\'t be empty</string>
+    <string name="post_vide">Post can\'t be empty</string>
+    <string name="com_vide">Comment can\'t be empty</string>
+    <string name="date_vide">Birthday can\'t be empty</string>
+    <string name="date_supp">Birthday can\'t be higher than today</string>
+    <string name="user_created">User has been created</string>
 
 
 </resources>

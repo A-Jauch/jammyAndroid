@@ -94,7 +94,7 @@ public class SignupTabFragment  extends Fragment implements AdapterView.OnItemSe
             public void onClick(View v) {
                 String str_date = birthdate_edit_text.getText().toString();
                 if (TextUtils.isEmpty(str_date)){
-                    Toast.makeText(getContext(), "La date ne peut pas être vide", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.date_vide), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -109,7 +109,7 @@ public class SignupTabFragment  extends Fragment implements AdapterView.OnItemSe
 
 
                 if ( birthday.compareTo(calendar.getTime()) > 0 ){
-                    Toast.makeText(getContext(), "La date ne peut pas être superieur a celle d'aujourd'hui", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.date_supp), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -129,8 +129,7 @@ public class SignupTabFragment  extends Fragment implements AdapterView.OnItemSe
                     public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                         if (response.isSuccessful()){
                             User user = response.body();
-                            //Toast.makeText(getContext(), user.getName().toString(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "Votre utilisateur a bien été creer", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.user_created), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getContext(), LoginActivity.class);
                             startActivity(intent);
                             getActivity().finish();

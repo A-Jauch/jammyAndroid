@@ -29,4 +29,10 @@
     <string name="accueil">Accueil</string>
     <string name="creer_commentaire">Creer Commentaire</string>
     <string name="new_comment">nouveau commentaire</string>
+    <string name="thread_vide">Le nom du thread ne peut être vide</string>
+    <string name="post_vide">Le post ne peut être vide</string>
+    <string name="com_vide">Le commentaire ne peut être vide</string>
+    <string name="date_vide">La date ne peut pas être vide</string>
+    <string name="date_supp">La date ne peut pas être superieur a celle d\'aujourd\'hui</string>
+    <string name="user_created">Votre utilisateur a bien été crée</string>
 </resources>

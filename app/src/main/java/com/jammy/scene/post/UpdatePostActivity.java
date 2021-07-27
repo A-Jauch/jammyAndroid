@@ -2,6 +2,7 @@ package com.jammy.scene.post;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,9 +47,14 @@ public class UpdatePostActivity extends AppCompatActivity {
         sendPostUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = contentEditText.getText().toString();
-                Post post = new Post(content,userId,threadId);
-                updatePost(post);
+                if (!TextUtils.isEmpty(contentEditText.getText().toString())){
+                    String content = contentEditText.getText().toString();
+                    Post post = new Post(content,userId,threadId);
+                    updatePost(post);
+                } else {
+                    Toast.makeText(UpdatePostActivity.this, getString(R.string.post_vide), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -61,7 +67,7 @@ public class UpdatePostActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),   getString(R.string.post_created), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),   getString(R.string.post_updated), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(UpdatePostActivity.this, PostReceiver.class);
                     intent.putExtra(ID_THREAD_FROM_POST_UPDATE, threadId);
                     startActivity(intent);

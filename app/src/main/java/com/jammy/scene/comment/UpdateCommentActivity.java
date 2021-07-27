@@ -2,6 +2,7 @@ package com.jammy.scene.comment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,11 +54,16 @@ public class UpdateCommentActivity extends AppCompatActivity {
         sendCommentUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = contentEditText.getText().toString();
-                Comment comment = new Comment(content, userId,postId);
-                Comment comment2 = new Comment();
-                comment2.setContent(content);
-                updateComment(comment2);
+                if (!TextUtils.isEmpty(contentEditText.getText().toString())){
+                    String content = contentEditText.getText().toString();
+                    Comment comment = new Comment(content, userId,postId);
+                    Comment comment2 = new Comment();
+                    comment2.setContent(content);
+                    updateComment(comment2);
+                } else {
+                    Toast.makeText(UpdateCommentActivity.this, getString(R.string.com_vide), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

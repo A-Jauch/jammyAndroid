@@ -2,6 +2,7 @@ package com.jammy.scene.post;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,8 +49,13 @@ public class CreatePostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content = contentEditText.getText().toString();
-                Post post = new Post(content, userId, threadId);
-                sendPost(post);
+                if (!TextUtils.isEmpty(content)){
+                    Post post = new Post(content, userId, threadId);
+                    sendPost(post);
+                } else {
+                    Toast.makeText(CreatePostActivity.this, getString(R.string.post_vide), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,9 +57,14 @@ public class CreateCommentActivity extends AppCompatActivity {
         sendCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = contentEditText.getText().toString();
-                CreateComment comment = new CreateComment(content, userId, postId);
-                sendComment(comment);
+                if (!TextUtils.isEmpty(contentEditText.getText().toString())){
+                    String content = contentEditText.getText().toString();
+                    CreateComment comment = new CreateComment(content, userId, postId);
+                    sendComment(comment);
+                } else {
+                    Toast.makeText(CreateCommentActivity.this, getString(R.string.com_vide), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

@@ -2,6 +2,7 @@ package com.jammy.scene.thread;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,9 +49,14 @@ public class CreateThreadActivity extends AppCompatActivity {
         sendThreadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Category category = new Category(categoryId);
-                PostThread thread = new PostThread(threadNameEditText.getText().toString(),categoryId);
-                sendThread(thread);
+                if (!TextUtils.isEmpty(threadNameEditText.getText().toString())){
+                    Category category = new Category(categoryId);
+                    PostThread thread = new PostThread(threadNameEditText.getText().toString(),categoryId);
+                    sendThread(thread);
+                } else {
+                    Toast.makeText(CreateThreadActivity.this, getString(R.string.thread_vide), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -63,7 +69,6 @@ public class CreateThreadActivity extends AppCompatActivity {
             public void onResponse(Call<ResponsePostThread> call, Response<ResponsePostThread> response) {
                 if (response.isSuccessful()){
                     ResponsePostThread responseThread = response.body();
-                    Toast.makeText(CreateThreadActivity.this,  "Thread: " + responseThread.getResults().getName() + " crée", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CreateThreadActivity.this, ThreadReceiver.class);
                     intent.putExtra(ID_CATEGORY_THREAD, responseThread.getResults().getCategory_id());
                     startActivity(intent);
