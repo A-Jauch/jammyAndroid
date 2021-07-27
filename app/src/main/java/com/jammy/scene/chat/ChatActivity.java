@@ -141,7 +141,6 @@ public class ChatActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseCreateMessage> call, Response<ResponseCreateMessage> response) {
                 if (response.isSuccessful()){
                     ResponseCreateMessage responseMessage = response.body();
-                    Toast.makeText(ChatActivity.this,   responseMessage.getResults().getContent(), Toast.LENGTH_SHORT).show();
                    // Intent intent = new Intent(CreatePostActivity.this, PostReceiver.class);
                    // intent.putExtra(ID_POST_CREATED_THREAD, responsePost.getResults().getThread_id());
                   //  startActivity(intent);
